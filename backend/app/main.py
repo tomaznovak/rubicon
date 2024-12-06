@@ -9,6 +9,7 @@ from backend.db.database import get_db
 from sqlalchemy.orm import Session
 from .routers import func, auth
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 
 models.Base.metadata.create_all(bind=database.engine)
@@ -77,3 +78,10 @@ async def api(db: Session = Depends(get_db)):
 @app.get('/login', response_class=HTMLResponse)
 async def log(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
+
+if __name__ == "__main__":
+    uvicorn.run(
+        app,
+        host='0.0.0.0',
+        port=8080
+    )
