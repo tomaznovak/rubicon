@@ -26,7 +26,7 @@ class FileInfo(BaseModel):
     url: str
 
 class UserCreate(BaseModel):
-    name: EmailStr
+    email: EmailStr
     password: str
 
 class UserOut(BaseModel):
@@ -43,6 +43,7 @@ class UserLogin(BaseModel):
 
 class Token(BaseModel):
     access_token: str
+    refresh_token: str
     token_type: str
 
 class TokenData(BaseModel):

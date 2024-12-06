@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     algorithm: str
     access_token_expire_minutes: int
     openai_api_key: str
+    refresh_token_expire_days: int
     
     class Config():
         env_file = ".env"

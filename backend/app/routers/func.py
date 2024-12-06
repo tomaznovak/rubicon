@@ -17,7 +17,7 @@ router = APIRouter(
 templates = Jinja2Templates(directory="frontend")
 
 @router.get('', response_class=HTMLResponse)
-async def frontend(request: Request):
+async def frontend(request: Request, current_user: int = Depends(oauth2.get_current_user)):
     return templates.TemplateResponse("index.html", {"request": request})
 
 

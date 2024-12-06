@@ -293,7 +293,14 @@
         </main>
     </div>
 
+    <script src="/frontend/auth-middleware.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                window.location.href = '/login';
+            }
+        });
         document.addEventListener('DOMContentLoaded', function() {
             const chatForm = document.getElementById('chat-form');
             const messageInput = document.getElementById('message-input');

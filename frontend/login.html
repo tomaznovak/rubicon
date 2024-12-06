@@ -124,6 +124,7 @@
         <button id="backButton" class="back-button">Back to Landing Page</button>
     </div>
 
+    <script src="/frontend/auth-middleware.js"></script>
     <script>
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -142,12 +143,12 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('Login successful:', data);
-                    // Store the token in localStorage
-                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('access_token', data.access_token)
+                    localStorage.setItem('refresh_token', data.refresh_token);
                     window.location.href = '/agent';
                 } else {
-                    errorMessage.textContent = 'Incorrect email or password';
+                    const error = await response.json();
+                    errorMessage.textContent = error.detail || 'Incorrect email or password';
                     errorMessage.style.display = 'block';
                 }
             } catch (error) {
