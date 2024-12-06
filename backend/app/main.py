@@ -1,15 +1,18 @@
+import sys
+sys.path.append("C:/Users/Lenovo/Desktop/Mark-2")
 from fastapi import FastAPI, HTTPException, status, Depends, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from typing import Dict, List
-import backend.agency as agency
-from . import schemas
+from backend.swarm import agency
+from backend.app import schemas
 from backend.db import database, models
 from backend.db.database import get_db
 from sqlalchemy.orm import Session
-from .routers import func, auth
+from backend.app.routers import func, auth
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+
 
 
 models.Base.metadata.create_all(bind=database.engine)
@@ -40,7 +43,7 @@ async def main(request: Request):
 @app.post('/run/',status_code=status.HTTP_200_OK, response_model=schemas.Response)
 async def run(prompt: schemas.Prompt, db: Session = Depends(get_db)) -> Dict:
     try:
-        response = agency.agency.get_completion(prompt.prompt)
+        response = agency.get_completion(prompt.prompt)
         return {'response': response}
     except Exception as e:
         db.rollback()
